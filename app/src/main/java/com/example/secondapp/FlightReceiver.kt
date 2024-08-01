@@ -9,6 +9,8 @@ import android.util.Log
 class FlightReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log.i("Flight","receive a flight broadcast")
+        if (intent.getAction().equals("ihave.flight")) {
+            Log.i("Flight", "receive a flight broadcast")
+        }
     }
 }
