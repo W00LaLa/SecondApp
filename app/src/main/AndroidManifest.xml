@@ -7,7 +7,7 @@
     </queries>
 
     <uses-permission android:name="mypermission.password.portugal" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +20,15 @@
         android:theme="@style/Theme.SecondApp"
         tools:targetApi="31">
         <activity
+            android:name=".StorageActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".DataAdapter"
             android:exported="false" />
 
@@ -29,22 +38,17 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="ihave.flight" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".AnyActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
