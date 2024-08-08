@@ -22,6 +22,17 @@ class StorageActivity : AppCompatActivity() {
         setContentView(view)
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.button.setOnClickListener {
+            // try {
+            var a = 30/0
+            /*} catch (e: Exception) {
+                Log.i("MAin","alternate medicine")
+            }*/
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         storeData()
