@@ -3,6 +3,7 @@ package com.example.secondapp
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.provider.CallLog
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -57,13 +58,24 @@ class StorageActivity : AppCompatActivity() {
         super.onResume()
         restoreData()
 
-        val uriSms = Uri.parse("content://sms/inbox")
+        /*val uriSms = Uri.parse("content://sms/inbox")
         val dataCursor: Cursor? = getContentResolver().query(uriSms, null, null, null, null)
         val fromColNames = arrayOf("address","body")
         val toTexviewIds = intArrayOf(android.R.id.text1,android.R.id.text2)
         var cursorAdaper = SimpleCursorAdapter(this,
             android.R.layout.simple_list_item_2,
-            dataCursor,fromColNames,toTexviewIds)
+            dataCursor,fromColNames,toTexviewIds)*/
+
+        val cursor: Cursor? = getContentResolver().query(
+            CallLog.Calls.CONTENT_URI,
+            null, null, null, CallLog.Calls.DATE + " DESC"
+        )
+        // val uriSms = Uri.parse("content://sms/inbox")
+        //val dataCursor: Cursor? = getContentResolver().query(uriSms, null, null, null, null)
+        val colName = CallLog.Calls.NUMBER
+        val fromColNames = arrayOf(colName)
+        val toTexviewIds = intArrayOf(android.R.id.text1)
+        var cursorAdaper = SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor,fromColNames,toTexviewIds)
         binding.listView.adapter = cursorAdaper
     }
 
