@@ -1,11 +1,14 @@
 package com.example.secondapp
 
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.secondapp.databinding.ActivityStorageBinding
+import androidx.cursoradapter.widget.SimpleCursorAdapter
 
 private  val fileName = "filenamecognizant"
 private const val NAME = "name"
@@ -53,6 +56,15 @@ class StorageActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         restoreData()
+
+        val uriSms = Uri.parse("content://sms/inbox")
+        val dataCursor: Cursor? = getContentResolver().query(uriSms, null, null, null, null)
+        val fromColNames = arrayOf("address","body")
+        val toTexviewIds = intArrayOf(android.R.id.text1,android.R.id.text2)
+        var cursorAdaper = SimpleCursorAdapter(this,
+            android.R.layout.simple_list_item_2,
+            dataCursor,fromColNames,toTexviewIds)
+        binding.listView.adapter = cursorAdaper
     }
 
     private fun restoreData() {
