@@ -10,17 +10,25 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.secondapp.databinding.ActivityStorageBinding
 import androidx.cursoradapter.widget.SimpleCursorAdapter
+import com.example.secondapp.database.Item
+import com.example.secondapp.database.ItemDao
+import com.example.secondapp.database.ItemRoomDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private  val fileName = "filenamecognizant"
 private const val NAME = "name"
 private const val PWD = "pwd"
 
 class StorageActivity : AppCompatActivity() {
+    lateinit var dao: ItemDao
 
     lateinit var  binding: ActivityStorageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var database = ItemRoomDatabase.getDatabase(this)
+        dao = database.itemDao()
         binding = ActivityStorageBinding.inflate(layoutInflater)
         var view = binding.root
         setContentView(view)
@@ -29,11 +37,10 @@ class StorageActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         binding.button.setOnClickListener {
-            // try {
-            var a = 30/0
-            /*} catch (e: Exception) {
-                Log.i("MAin","alternate medicine")
-            }*/
+            GlobalScope.launch {
+                var item = Item(21, "fruits", 11.11, 11)
+                dao.insert(item)
+            }
         }
     }
 
