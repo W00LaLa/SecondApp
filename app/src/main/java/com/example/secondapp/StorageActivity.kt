@@ -13,7 +13,9 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter
 import com.example.secondapp.database.Item
 import com.example.secondapp.database.ItemDao
 import com.example.secondapp.database.ItemRoomDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 private  val fileName = "filenamecognizant"
@@ -40,6 +42,12 @@ class StorageActivity : AppCompatActivity() {
             GlobalScope.launch {
                 var item = Item(21, "fruits", 11.11, 11)
                 dao.insert(item)
+            }
+        }
+        binding.btnGet.setOnClickListener {
+            GlobalScope.launch(Dispatchers.Main) {
+                var item = dao.getItem(21).first()
+                binding.tvDb.setText(item.toString())
             }
         }
     }
